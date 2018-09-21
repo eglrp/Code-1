@@ -11,7 +11,7 @@ def open_excel(file= 'test.xlsx'):
         print (str(e))
 
 #根据名称获取Excel表格中的数据   参数:file：Excel文件路径     colnameindex：表头列名所在行的索引  ，by_name：Sheet1名称
-def excel_table_byname(file= 'bo.xls', colnameindex=0, by_name=u'bo'):
+def excel_table_byname(file= '1234.xls', colnameindex=0, by_name=u'1234'):
     data = open_excel(file) #打开excel文件
     table = data.sheet_by_name(by_name) #根据sheet名字来获取excel中的sheet
     nrows = table.nrows #行数
@@ -68,10 +68,10 @@ def transformation_form(list_all,num_day_sort,name_list_unique):
         list_pre_final.append(name)
         for list_sorted_name_pre_pre in list_sorted_name_pre:
             # 早上7:00到10:00
-            if int(list_sorted_name_pre_pre[1].split(' ')[-1].split(':')[0])  > 7 and int(list_sorted_name_pre_pre[1].split(' ')[-1].split(':')[0]) < 10:
+            if int(list_sorted_name_pre_pre[1].split(' ')[-1].split(':')[0])  >= 6 and int(list_sorted_name_pre_pre[1].split(' ')[-1].split(':')[0]) < 10:
                 list_pre_final.append(list_sorted_name_pre_pre[1])
             # 下午13:00到16:00之间
-            elif  int(list_sorted_name_pre_pre[1].split(' ')[-1].split(':')[0])  > 13 and int(list_sorted_name_pre_pre[1].split(' ')[-1].split(':')[0])  < 16 :
+            elif  int(list_sorted_name_pre_pre[1].split(' ')[-1].split(':')[0])  >= 12 and int(list_sorted_name_pre_pre[1].split(' ')[-1].split(':')[0])  < 16 :
                 list_pre_final.append(list_sorted_name_pre_pre[1])
             else:
                 pass
@@ -110,7 +110,7 @@ def transformation_form(list_all,num_day_sort,name_list_unique):
                 #拿到当天上午所有记录
                 list_day_morning=[]
                 for record_pre in record:
-                    if int(record_pre.split(' ')[-1].split(':')[0])<12:
+                    if int(record_pre.split(' ')[-1].split(':')[0])<=12:
                         list_day_morning.append(record_pre)
                 # 写入当天上午信息
                 if list_day_morning:
@@ -127,7 +127,7 @@ def transformation_form(list_all,num_day_sort,name_list_unique):
                 # 拿到当天下午所有记录
                 list_day_afternoon=[]
                 for record_pre in record:
-                    if int(record_pre.split(' ')[-1].split(':')[0])>13:
+                    if int(record_pre.split(' ')[-1].split(':')[0])>12:
                         list_day_afternoon.append(record_pre)
                 # 写入当天下午信息
                 if list_day_afternoon:
