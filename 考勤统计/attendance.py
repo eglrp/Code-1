@@ -30,7 +30,7 @@ def excel_table_byname(file= '1234.xls', colnameindex=0, by_name=u'1234'):
 #将list中的内容写入一个新的file文件
 def testXlwt(file = 'new.xls', list = []):
     book = xlwt.Workbook() #创建一个Excel
-    sheet1 = book.add_sheet('hello') #在其中创建一个名为hello的sheet
+    sheet1 = book.add_sheet(file.split('.')[0]) #在其中创建一个名为hello的sheet
     i = 0 #行序号
     for app in list : #遍历list每一行
         j = 0 #列序号
@@ -148,13 +148,53 @@ def transformation_form(list_all,num_day_sort,name_list_unique):
         result_final.append(result)
     return result_final
 
+def statistics(result):
+    '''
+    统计无记录、迟到名单
+    '''
+    # 去掉第一行的标题
+    result.pop(0)
+    result_final=[]
+    # 写入头信息
+
+    head=['名字','迟到次数','无记录次数']
+    result_final.append(head)
+
+
+    #遍历每一行，统计完结果放入list中
+    for result_pre in result:
+        temp = []
+        temp.append(result_pre[0])  # 先写入名字
+        late=0 #统计迟到次数
+        no_record=0  #统计无记录次数
+        #遍历第一行所有内容
+        for people_pre in result_pre:
+            if '迟到' in people_pre:
+                late=late+1
+            if '无记录' in people_pre:
+                no_record=no_record+1
+        # 过滤 正常数据
+        if late==0 and no_record==0:
+            pass
+        else:
+            temp.append(late)
+            temp.append(no_record)
+            result_final.append(temp)
+    return result_final
+
+
+
+
+
+
+
 
 #主函数
 def main():
    list_all=[]
    name_list=[]
-   name_list_unique=[]
-   tables = excel_table_byname()
+   # XXX.xls ：原始表     XXX ：表中的第一页名字
+   tables = excel_table_byname(file= '1234.xls', colnameindex=0, by_name=u'1234')
    # 去掉第一行的标题
    tables.pop(0)
    # 查询表格共有几天
@@ -166,26 +206,22 @@ def main():
        num_day.append(row[4].split(' ')[0])
        list_all.append(list_pre_info)
        name_list.append(row[2])
-   # 签到后的所有信息
-   print(list_all)
+
 
 
    #日期按照从前到后排序（作为列）
    num_day_sort=sorted(list(set(num_day)))
-   print('日期按照从前到后排序')
-   print(num_day_sort)
 
    # 去重之后的名字 （作为行）
    name_list_unique=list(set(name_list))
-   print('去重之后的名字')
-   print(name_list_unique)
 
    # 转化为 老师要求的形式
    result=transformation_form(list_all,num_day_sort,name_list_unique)
 
 
    # 将结果写入excel
-   testXlwt('考勤统计.xls', result)
+   testXlwt('attendance.xls', result)
+
 
 
 
