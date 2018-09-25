@@ -2,9 +2,13 @@
 
 
 ## attendance.py文件
+
 - 接受的excel格式
+
 ![](http://boboprivate.oss-cn-beijing.aliyuncs.com/18-9-16/76964940.jpg)
+
 - 生成的excel格式
+
 ![](http://boboprivate.oss-cn-beijing.aliyuncs.com/18-9-16/24491946.jpg)
 
 - 功能点：
@@ -16,8 +20,11 @@
 
 ## late_no_record.py文件
 - 接受的excel格式
+
 ![](http://boboprivate.oss-cn-beijing.aliyuncs.com/18-9-16/24491946.jpg)
+
 - 生成的excel格式
+
 ![](http://boboprivate.oss-cn-beijing.aliyuncs.com/18-9-25/10249171.jpg)
 
 
