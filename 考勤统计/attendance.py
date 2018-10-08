@@ -62,17 +62,20 @@ def transformation_form(list_all,num_day_sort,name_list_unique):
 
     list_final_by_name=[]
     for list_sorted_name_pre in list_sorted_name:
+        # 拿到学号
+        number=list_sorted_name_pre[0][0]
         # 拿到名字
-        name=list_sorted_name_pre[0][0]
+        name=list_sorted_name_pre[0][1]
         list_pre_final=[]
+        list_pre_final.append(number)
         list_pre_final.append(name)
         for list_sorted_name_pre_pre in list_sorted_name_pre:
             # 早上7:00到10:00
-            if int(list_sorted_name_pre_pre[1].split(' ')[-1].split(':')[0])  >= 6 and int(list_sorted_name_pre_pre[1].split(' ')[-1].split(':')[0]) < 10:
-                list_pre_final.append(list_sorted_name_pre_pre[1])
+            if int(list_sorted_name_pre_pre[2].split(' ')[-1].split(':')[0])  >= 6 and int(list_sorted_name_pre_pre[2].split(' ')[-1].split(':')[0]) < 10:
+                list_pre_final.append(list_sorted_name_pre_pre[2])
             # 下午13:00到16:00之间
-            elif  int(list_sorted_name_pre_pre[1].split(' ')[-1].split(':')[0])  >= 12 and int(list_sorted_name_pre_pre[1].split(' ')[-1].split(':')[0])  < 16 :
-                list_pre_final.append(list_sorted_name_pre_pre[1])
+            elif  int(list_sorted_name_pre_pre[2].split(' ')[-1].split(':')[0])  >= 12 and int(list_sorted_name_pre_pre[2].split(' ')[-1].split(':')[0])  < 16 :
+                list_pre_final.append(list_sorted_name_pre_pre[2])
             else:
                 pass
         list_final_by_name.append(list_pre_final)
@@ -82,7 +85,7 @@ def transformation_form(list_all,num_day_sort,name_list_unique):
 
     result_final=[]
     # 写入头文件
-    head=['名字']
+    head=['学号','名字']
     for num_day_sort_pre in num_day_sort:
         head.append(num_day_sort_pre+'上午')
         head.append(num_day_sort_pre + '下午')
@@ -94,8 +97,11 @@ def transformation_form(list_all,num_day_sort,name_list_unique):
     # 读取一条记录
     for list_final_by_name_pre in list_final_by_name:
         result = []
-        # 读取名字
+        # 读取学号
         result.append(list_final_by_name_pre[0])
+        # 读取名字
+        result.append(list_final_by_name_pre[1])
+        list_final_by_name_pre.pop(0)
         list_final_by_name_pre.pop(0)
         # 遍历所有时间
         for num_day_sort_pre in num_day_sort:
@@ -183,8 +189,26 @@ def statistics(result):
     return result_final
 
 
+def split_by_nummmmber(result):
+    '''
+    根据学号将结果分为几部分
+    '''
+    # 找出所有出现的不同年级的学号
+    number_type=[]
 
-
+    result_final=[]
+    result_final.append(result[0])
+    #去掉头信息
+    result.pop(0)
+    for result_pre in result:
+        number_type.append(result_pre[0][0:3])
+    number_type=list(set(number_type))
+    number_type.sort()
+    for number_type_pre in number_type:
+        for result_pre in result:
+            if number_type_pre in result_pre[0]:
+                result_final.append(result_pre)
+    return result_final
 
 
 
@@ -201,6 +225,7 @@ def main():
    num_day=[]
    for row in tables:
        list_pre_info = []
+       list_pre_info.append(row[1])
        list_pre_info.append(row[2])
        list_pre_info.append(row[4])
        num_day.append(row[4].split(' ')[0])
@@ -218,12 +243,11 @@ def main():
    # 转化为 老师要求的形式
    result=transformation_form(list_all,num_day_sort,name_list_unique)
 
+   # 根据学号将结果分为几部分
+   result=split_by_nummmmber(result)
 
    # 将结果写入excel
    testXlwt('attendance.xls', result)
-
-
-
 
 if __name__=="__main__":
     main()

@@ -53,14 +53,15 @@ def statistics(result):
     result_final=[]
     # 写入头信息
 
-    head=['名字','迟到次数','无记录次数']
+    head=['学号','名字','迟到次数','无记录次数']
     result_final.append(head)
 
 
     #遍历每一行，统计完结果放入list中
     for result_pre in result:
         temp = []
-        temp.append(result_pre[0])  # 先写入名字
+        temp.append(result_pre[0])  # 写入学号
+        temp.append(result_pre[1])  # 写入名字
         late=0 #统计迟到次数
         no_record=0  #统计无记录次数
         #遍历第一行所有内容
