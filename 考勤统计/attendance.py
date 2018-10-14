@@ -71,10 +71,10 @@ def transformation_form(list_all,num_day_sort,name_list_unique):
         list_pre_final.append(name)
         for list_sorted_name_pre_pre in list_sorted_name_pre:
             # 早上7:00到10:00
-            if int(list_sorted_name_pre_pre[2].split(' ')[-1].split(':')[0])  >= 6 and int(list_sorted_name_pre_pre[2].split(' ')[-1].split(':')[0]) < 10:
+            if int(list_sorted_name_pre_pre[2].split(' ')[-1].split(':')[0])  >= 6 and int(list_sorted_name_pre_pre[2].split(' ')[-1].split(':')[0]) <= 11:
                 list_pre_final.append(list_sorted_name_pre_pre[2])
             # 下午13:00到16:00之间
-            elif  int(list_sorted_name_pre_pre[2].split(' ')[-1].split(':')[0])  >= 12 and int(list_sorted_name_pre_pre[2].split(' ')[-1].split(':')[0])  < 16 :
+            elif  int(list_sorted_name_pre_pre[2].split(' ')[-1].split(':')[0])  >= 12 and int(list_sorted_name_pre_pre[2].split(' ')[-1].split(':')[0])  <= 16 :
                 list_pre_final.append(list_sorted_name_pre_pre[2])
             else:
                 pass
@@ -116,7 +116,7 @@ def transformation_form(list_all,num_day_sort,name_list_unique):
                 #拿到当天上午所有记录
                 list_day_morning=[]
                 for record_pre in record:
-                    if int(record_pre.split(' ')[-1].split(':')[0])<=12:
+                    if int(record_pre.split(' ')[-1].split(':')[0]) < 12:
                         list_day_morning.append(record_pre)
                 # 写入当天上午信息
                 if list_day_morning:
@@ -133,7 +133,7 @@ def transformation_form(list_all,num_day_sort,name_list_unique):
                 # 拿到当天下午所有记录
                 list_day_afternoon=[]
                 for record_pre in record:
-                    if int(record_pre.split(' ')[-1].split(':')[0])>12:
+                    if int(record_pre.split(' ')[-1].split(':')[0]) >= 12:
                         list_day_afternoon.append(record_pre)
                 # 写入当天下午信息
                 if list_day_afternoon:
