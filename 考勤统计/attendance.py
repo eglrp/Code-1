@@ -122,7 +122,7 @@ def transformation_form(list_all,num_day_sort,name_list_unique):
                 if list_day_morning:
                     # 当天上午若有多条数据，只拿第一条
                     # 判断 是否迟到  是否>8:40
-                    if int(list_day_morning[0].split(' ')[-1].split(':')[0])  >= 8  and  int(list_day_morning[0].split(' ')[-1].split(':')[1])  > 40:
+                    if (int(list_day_morning[0].split(' ')[-1].split(':')[0])  == 8  and  int(list_day_morning[0].split(' ')[-1].split(':')[1])  > 40) or (int(list_day_morning[0].split(' ')[-1].split(':')[0])  > 8):
                          result.append(list_day_morning[0].split(' ')[-1]+'迟到')
                     else:
                         result.append(list_day_morning[0].split(' ')[-1] )
@@ -139,7 +139,7 @@ def transformation_form(list_all,num_day_sort,name_list_unique):
                 if list_day_afternoon:
                     # 当天下午若有多条数据，只拿第一条
                     # 判断 是否迟到  是否>14:40
-                    if int(list_day_afternoon[0].split(' ')[-1].split(':')[0]) >= 14 and int( list_day_afternoon[0].split(' ')[-1].split(':')[1]) > 40:
+                    if (int(list_day_afternoon[0].split(' ')[-1].split(':')[0]) == 14 and int( list_day_afternoon[0].split(' ')[-1].split(':')[1]) > 40) or (int(list_day_afternoon[0].split(' ')[-1].split(':')[0]) > 14):
                         result.append(list_day_afternoon[0].split(' ')[-1] + '迟到')
                     else:
                         result.append(list_day_afternoon[0].split(' ')[-1])
